@@ -1,5 +1,6 @@
 package edu.unipiloto.constraint_layaout;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -37,11 +38,11 @@ public class MailActivity extends AppCompatActivity {
                 return;
             }
 
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("message/rfc822");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
-            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-            intent.putExtra(Intent.EXTRA_TEXT, message);
+            Uri uri = Uri.parse("mailto:" + to +
+                    "?subject=" + Uri.encode(subject) +
+                    "&body=" + Uri.encode(message));
+
+            Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
 
             startActivity(Intent.createChooser(intent, "Enviar correo..."));
         });
